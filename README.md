@@ -1,7 +1,7 @@
 
 ## Introduction
 
-In this Assignment you will Create an interactive web page that demonstrates JavaScript DOM manipulation, event handling, and basic programming concepts learned in Chapter 3. so the image of the assignment (/desktop/design.png)
+In this Assignment you will Create an interactive web page that demonstrates JavaScript DOM manipulation, event handling, and basic programming concepts learned in Chapter 3. so the image of the assignment [design file](/desktop/design.png)
 
 
 ## Instructions
