@@ -1,48 +1,50 @@
-// DOM elements
-const counterDisplay = document.getElementById('counter-display');
-const incrementBtn = document.getElementById('increment-btn');
-const decrementBtn = document.getElementById('decrement-btn');
-const resetBtn = document.getElementById('reset-btn');
-const customInput = document.getElementById('custom-input');
-const setValueBtn = document.getElementById('set-value-btn');
+document.addEventListener('DOMContentLoaded', () => {
+  const postInput = document.getElementById('postInput');
+  const addPostBtn = document.getElementById('addPostBtn');
+  const postsContainer = document.getElementById('postsContainer');
 
-let counter = 0;
+  addPostBtn.addEventListener('click', () => {
+      const postText = postInput.value.trim();
+      
+      if (postText) {
+          const postDiv = document.createElement('div');
+          postDiv.className = 'post';
+          
+          const postContent = document.createElement('p');
+          postContent.className = 'post-text';
+          postContent.textContent = postText;
+          
+          const likeButton = document.createElement('button');
+          likeButton.className = 'like-btn';
+          likeButton.innerHTML = '❤️ Like';
+          
+          const likeCount = document.createElement('span');
+          likeCount.className = 'like-count';
+          likeCount.textContent = '0 likes';
+          
+          postDiv.appendChild(postContent);
+          postDiv.appendChild(likeButton);
+          postDiv.appendChild(likeCount);
+          
+          postsContainer.prepend(postDiv);
+          postInput.value = '';
+      }
+  });
 
-// Update counter display
-function updateDisplay() {
-    counterDisplay.textContent = counter;
-    
-    // Check for multiples of 10
-    if (counter !== 0 && counter % 10 === 0) {
-        alert(`Counter reached ${counter}!`);
-    }
-}
-
-// Event listeners
-incrementBtn.addEventListener('click', () => {
-    counter++;
-    updateDisplay();
+  postsContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('like-btn')) {
+          const likeCount = e.target.nextElementSibling;
+          const currentLikes = parseInt(likeCount.dataset.likes) || 0;
+          const newLikes = e.target.classList.contains('liked') ? currentLikes - 1 : currentLikes + 1;
+          
+          e.target.classList.toggle('liked');
+          likeCount.dataset.likes = newLikes;
+          likeCount.textContent = `${newLikes} ${newLikes === 1 ? 'like' : 'likes'}`;
+          
+          e.target.style.transform = 'scale(1.2)';
+          setTimeout(() => {
+              e.target.style.transform = 'scale(1)';
+          }, 200);
+      }
+  });
 });
-
-decrementBtn.addEventListener('click', () => {
-    counter--;
-    updateDisplay();
-});
-
-resetBtn.addEventListener('click', () => {
-    counter = 0;
-    updateDisplay();
-});
-
-setValueBtn.addEventListener('click', () => {
-    const value = parseInt(customInput.value);
-    if (!isNaN(value)) {
-        counter = value;
-        updateDisplay();
-    } else {
-        alert("Please enter a valid number!");
-    }
-});
-
-// Initialize display
-updateDisplay();
